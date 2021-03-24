@@ -1,0 +1,65 @@
+<section class="campaign-editor">
+    <div *ngIf="isLoading" class="loading">Carregando ...</div>
+    <form *ngIf="!isLoading" [formGroup]="campaignForm">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="campaign-thumb">
+                    <label>IMAGEM DA CAPA</label>
+                    <figure>
+                        <img [src]="campaignForm.get('thumbnail').value || '/assets/img/logo-band-colorido.png'" alt="thumb for campaign">
+                        <div>
+                            <i class="fas fa-arrow-circle-up" (click)="thumbnailCampaign.click()">
+                                <input (change)="getThumbnailCampaign($event, thumbnailCampaign)" #thumbnailCampaign hidden type="file"
+                                    accept="image/png, image/jpeg" />
+                            </i>
+                            <i class="fas fa-trash-alt" (click)="campaignForm.get('thumbnail').value = null"></i>
+                        </div>
+                    </figure>
+                </div>
+            </div>
+            <div class="col-xl-9">
+                <div class="campaign-name">
+                    <label>NOME DA CAMPANHA</label>
+                    <input type="text" placeholder="Nome da campanha" formControlName="name">
+                </div>
+                <div class="campaign-channel">
+                    <label>VEICULO</label>
+                    <p-dropdown *ngIf="channelOptions?.length > 0" optionLabel="label" optionValue="value"
+                        [options]="channelOptions" formControlName="channel" placeholder="Canal"
+                        [style]="{width: '100%'}" dataKey="id">
+                    </p-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 campaign-media">
+                <label>ASSOCIAR CONTA DO FACEBOOK</label>
+                <p-multiSelect [options]="facebookOptions" formControlName="facebook" optionLabel="label"
+                    placeholder="Selecione um canal" optionValue="id" dataKey="id" [style]="{'width':'100%'}">
+                </p-multiSelect>
+            </div>
+            <div class="col-xl-4 campaign-media">
+                <label>ASSOCIAR CONTA DO TWITTER</label>
+                <p-multiSelect [options]="twitterOptions" formControlName="twitter" placeholder="Selecione um canal"
+                    [style]="{'width':'100%'}" optionLabel="label" optionValue="id" dataKey="id">
+                </p-multiSelect>
+            </div>
+            <div class="col-xl-4 campaign-media">
+                <label>ASSOCIAR CONTA DO YOUTUBE</label>
+                <p-multiSelect [options]="youtubeOptions" formControlName="youtube" placeholder="Selecione um canal"
+                    [style]="{'width':'100%'}" optionLabel="label" optionValue="id" dataKey="id">
+                </p-multiSelect>
+            </div>
+            <div class="col-xl-4 campaign-media">
+                <label>UOL</label>
+                <p-multiSelect [options]="uolOptions" formControlName="uol" [style]="{'width':'100%'}"
+                    placeholder="Selecione um canal" optionLabel="label" optionValue="id" dataKey="id">
+                </p-multiSelect>
+            </div>
+        </div>
+        <div class="campaign-editor-submit">
+            <button [disabled]="isSendingForm" (click)="submitForm()">{{ (campaignId) ? 'Salvar Alterações' : 'Criar
+                Campanha' }}</button>
+        </div>
+    </form>
+</section>

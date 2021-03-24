@@ -1,0 +1,186 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  font-family: 'Open Sans', sans-serif;
+  background: #f7f7f7;
+}
+
+body {
+  -webkit-font-smoothing: antialised !important;
+}
+
+button {
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+}
+
+.u-h100 {
+  height: 100%;
+}
+
+.u-flex {
+  display: flex;
+}
+
+.input-form {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+
+  ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #e0e0e0;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #e0e0e0;
+  }
+
+  ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #e0e0e0;
+  }
+}
+
+.text-area-form {
+  padding: 20px;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+
+  ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #e0e0e0;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #e0e0e0;
+  }
+
+  ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #e0e0e0;
+  }
+}
+
+button:focus {
+  outline: none;
+}
+
+input.ng-invalid.ng-touched:focus,
+textarea.ng-invalid.ng-touched:focus {
+  border-color: #ed1c24;
+}
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border-color: #ed1c24;
+  border-left: 5px solid #ed1c24;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #414753;
+  outline: none;
+}
+
+input.ng-valid.ng-touched:focus,
+textarea.ng-valid.ng-touched:focus {
+  border-color: #1bb934;
+}
+
+input.ng-valid.ng-touched,
+textarea.ng-valid.ng-touched {
+  border-color: #1bb934;
+  border-left: 5px solid #1bb934;
+}
+
+.p-tabview .p-tabview-panels {
+  background: #f7f7f7;
+}
+
+.p-dataview .p-dataview-content {
+  background: #f7f7f7;
+}
+
+.p-tabview .p-tabview-nav {
+  background: #f7f7f7;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #f7f7f7;
+  color: #f31632;
+  border-color: #f31632;
+}
+
+.p-tabview
+  .p-tabview-nav
+  li:not(.p-highlight):not(.p-disabled)
+  .p-tabview-nav-link {
+  background: #f7f7f7;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+  box-shadow: 0 0 0 0.2rem #ffbec6;
+}
+
+.p-tabview
+  .p-tabview-nav
+  li:not(.p-highlight):not(.p-disabled):hover
+  .p-tabview-nav-link {
+  background: #fafafa;
+}
+
+.component {
+  padding: 60px 140px;
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+
+    div button {
+      padding: 8px 16px;
+      color: #ffff;
+      background-color: #f31632;
+      border: none;
+    }
+  }
+}
+
+.submit-btn {
+  text-align: center;
+  margin-top: 32px;
+  button {
+    background-color: #ffe329;
+    border: none;
+    padding: 16px 32px;
+    font-weight: 600;
+  }
+
+  button:hover {
+    opacity: 0.7;
+  }
+
+  button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,109 @@
+<aside class="u-h100">
+  <header>
+    <div class="header-nav" *ngIf="showNav">
+      <a [routerLink]="['/home']"><i class="fas fa-circle"></i> REC</a>
+    </div>
+    <div class="header-nav-hide" *ngIf="!showNav">
+      <a [routerLink]="['/home']"><i class="fas fa-circle"></i></a>
+    </div>
+  </header>
+  <nav class="u-h100">
+    <div *ngIf="showNav" class="nav-body align-nav">
+      <div>
+        <div *ngFor="let menu of menuObject">
+          <div class="item-menu item-menu__title">{{ menu.title }}</div>
+          <ng-container *ngFor="let section of menu.sections">
+            <div class="item-menu item-menu__item" [class.item-menu__item--activated]="section.open"
+              (click)="openClosedMenu(section)">
+              <div class="item-menu__item--justify">
+                <div><i [class]="section.icon"></i> {{ section.name }}</div>
+                <div *ngIf="!section.open">
+                  <i class="fas fa-chevron-right"></i>
+                </div>
+                <div *ngIf="section.open">
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+              </div>
+            </div>
+            <ng-container *ngFor="let item of section.items">
+              <div *ngIf="section.open">
+                <div *ngIf="item?.name" class="item-menu item-menu__title">
+                  <i [class]="item.icon"></i> {{ item.name }}
+                </div>
+                <div *ngIf="item.subItems.length > 0">
+                  <span *ngIf="section.name == 'Canais'">
+                    <a *ngFor="let subItems of item.subItems" class="item-menu item-menu__subitems"
+                      [routerLink]="['/edicao', subItems?.channelType, subItems?.id]">
+                      {{ subItems.name }}
+                    </a>
+                  </span>
+                  <span *ngIf="(section.name == 'Clips') || (section.name == 'Campanhas') || (section.name == 'Gerenciamento de Canais')">
+                    <a *ngFor="let subItems of item.subItems" class="item-menu item-menu__subitems" style="margin-top: 16px;"
+                      [routerLink]="[subItems?.id]">
+                      {{ subItems.name }}
+                    </a>
+                  </span>
+                </div>
+                <div *ngIf="isLoadingMenu && section.name == 'Canais'" class="item-menu item-menu__loading">
+                  <i class="fa fa-spinner fa-spin"></i>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+
+
+        <div *ngFor="let menu of menuGerenciamento">
+          <div class="item-menu item-menu__title">{{ menu.title }}</div>
+          <ng-container *ngFor="let section of menu.sections">
+            <div class="item-menu item-menu__item" [class.item-menu__item--activated]="section.open"
+                 [routerLink]="[section.id]">
+              <div class="item-menu__item--justify">
+                <div><i [class]="section.icon"></i> {{ section.name }}</div>
+              </div>
+            </div>
+
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- <footer class="nav-footer">
+        <div class="item-menu item-menu__title item-menu__title--border">
+          Precisa de ajuda ?
+        </div>
+        <div>
+          <div class="align-avatar">
+            <figure>
+              <img class="avatar" src="https://imagem.band.com.br/novahome/47b6f7d7-e5bc-4032-9bab-6db3cfccda77.png"
+                alt="Imagem IA de Atendimento" />
+            </figure>
+            <span class="legenda">chat com zé maria</span>
+          </div>
+        </div>
+      </footer> -->
+    </div>
+    <div *ngIf="!showNav" class="nav-body-hide align-nav">
+      <div class="nav-hide-icons">
+        <div class="nav-hide-icon">
+          <i class="fas fa-play-circle" (click)="openNav()"></i>
+        </div>
+        <div class="nav-hide-icon">
+          <i class="fas fa-list-ul" (click)="openNav()"></i>
+        </div>
+        <!-- <div class="nav-hide-icon">
+          <i class="fas fa-user" (click)="openNav()"></i>
+        </div> -->
+      </div>
+      <!-- <footer class="nav-hide-footer">
+        <div class="nav-hide-footer-icon">
+          <i class="fas fa-question-circle"></i>
+        </div>
+        <div class="align-avatar-hide">
+          <figure>
+            <img class="avatar" src="https://imagem.band.com.br/novahome/47b6f7d7-e5bc-4032-9bab-6db3cfccda77.png" />
+          </figure>
+        </div>
+      </footer> -->
+    </div>
+  </nav>
+</aside>

@@ -1,0 +1,275 @@
+.queue-clips {
+    padding: 48px 96px 0px 96px;
+
+    .queue-clips-loading {
+        text-align: center;
+        margin-top: 120px;
+        font-size: 32px;
+        font-weight: 500;
+        color: #939da9;
+        user-select: none;
+    }
+
+    .queue-clips-table {
+
+        .line-header {
+            border-bottom: 2px solid #e2e2e2;
+            margin-bottom: 26px;
+
+            .line-header-font {
+                color: #939da9;
+                font-size: 12px;
+                font-weight: bold;
+            }
+        }
+
+        .queue-table-row {
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            box-shadow: 1px 3px #e5e5e5;
+
+            .queue-table-cell {
+                padding: 16px;
+                display: flex;
+                align-items: center;
+
+                img {
+                    max-height: 108px;
+                    max-width: 100%;
+                }
+
+                .queue-table-cell-title {
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #414854;
+                }
+
+                .queue-table-cell-description {
+                    font-size: 14px;
+                    font-weight: normal;
+                    color: #414854;
+                }
+
+                .queue-table-cell-icons {
+
+                    .queue-table-cell-icons-row {
+                        display: flex;
+                        // justify-content: space-between;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        justify-content: flex-start;
+
+                        i {
+                            margin: 8px;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .queue-table-cell-date {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #414854;
+                }
+
+                .queue-table-cell-status {
+
+                    .queue-table-cell-status-text {
+                        color: #414854;
+                        font-size: 14px;
+                        font-weight: 600;
+                        margin: 6px;
+                    }
+
+                    .ok {
+                        color: #7db25a;
+                    }
+
+                    .pending {
+                        color: #6d8eb8;
+                    }
+
+                    .error {
+                        color: #e31111;
+                    }
+                }
+
+            }
+        }
+    }
+
+    p-dialog::ng-deep.p-dialog-header {
+        height: 60px;
+        //background: #414753;
+
+        .queue-detail-reader {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f6f7f8;
+
+            span {
+                margin-left: 6px;
+            }
+        }
+    }
+
+    p-dialog::ng-deep.p-dialog-content {
+        height: 100%;
+        background: #f9f9f9;
+        padding: 36px 36px 0px 36px;
+
+        .queue-detail-content {
+
+            .queue-detail-content-box {
+                background: #ffffff;
+                border: 1px solid #efeeee;
+                padding: 16px;
+                border-radius: 6px;
+                margin-bottom: 20px;
+            }
+
+            .queue-detail-content-image {
+
+                img {
+                    max-width: 300px;
+                    max-height: 170px;
+                }
+
+                .queue-detail-content-image-sub {
+
+                    p {
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: #222730;
+
+                        span {
+                            margin-left: 6px;
+                            color: #939daa;
+                        }
+                    }
+                }
+            }
+
+            .queue-detail-content-url {
+
+                p {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #222730;
+                }
+
+                div {
+                    color: #6d8eb8;
+                }
+            }
+
+            .queue-detail-content-title, .queue-detail-content-description,  .queue-detail-content-text {
+                p {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #222730;
+                }
+            }
+
+        }
+    }
+
+    p-dialog::ng-deep.p-dialog-footer {
+        background: #f9f9f9;
+
+        .queue-detail-footer-icons {
+
+            p {
+                font-size: 14px;
+                font-weight: 600;
+                color: #222730;
+                text-align: left;
+            }
+
+            div {
+                text-align: left;
+
+                i {
+                    margin: 0px 10px;
+                    font-size: 24px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .queue-detail-footer-buttons {
+
+            button {
+                height: 60px;
+                width: 80px;
+                background: #f9f9f9;
+                border: 2px solid #dddddd;
+                margin: 0px 14px;
+
+                div {
+                    font-size: 11px;
+                    font-weight: 600;
+                    margin-top: 6px;
+                }
+            }
+        }
+    }
+
+    .twitter {
+        color: #55acee;
+    }
+
+    .facebook {
+        color: #3c5c8d;
+    }
+
+    .youtube {
+        color: #cc1818;
+    }
+
+    .globe {
+        color: #222730;
+    }
+
+    .mobile {
+        color: #222730;
+    }
+
+    .tv {
+        color: #e2e5eb;
+    }
+
+    .uol {
+        margin: 4px;
+        cursor: pointer;
+    }
+}
+
+.action-icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.download-icon, .share-icon {
+  cursor: pointer;
+  color: #f31632;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.share-icon {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.publish-btn {
+  float: right;
+  margin: 5% auto;
+}
+
+.p-dialog-header {
+  background-color: #fff;
+}
+

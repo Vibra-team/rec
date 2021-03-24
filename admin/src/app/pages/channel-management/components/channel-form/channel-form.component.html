@@ -1,0 +1,134 @@
+<section class="component">
+  <header class="component-header">
+    <h1>Gerenciamento de canais</h1>
+    <div>
+      <button (click)="routeToList()">Lista de canais</button>
+    </div>
+  </header>
+
+  <div *ngIf="isLoading" class="loading">Carregando ...</div>
+
+  <ng-container *ngIf="!isLoading" class="p-d-flex p-col-12">
+    <form [formGroup]="channelForm" (ngSubmit)="submitChannelForm()">
+      <div class="row">
+        <div class="p-col-6">
+          <div>
+            <span class="p-float-label">
+              <input
+                id="float-input-name"
+                type="text"
+                pInputText
+                formControlName="name"
+                class="p-col-12"
+              />
+              <label for="float-input-name">Nome:</label>
+            </span>
+          </div>
+
+          <div class="p-mt-6">
+            <span class="p-float-label">
+              <input
+                id="float-input-path"
+                type="text"
+                pInputText
+                formControlName="path"
+                class="p-col-12"
+              />
+              <label for="float-input-path">Path:</label>
+            </span>
+          </div>
+
+          <div class="p-mt-6">
+            <span class="p-float-label">
+              <input
+                id="float-input-folder"
+                type="text"
+                pInputText
+                formControlName="folder"
+                class="p-col-12"
+              />
+              <label for="float-input-folder">Folder:</label>
+            </span>
+          </div>
+
+          <div class="p-mt-6 p-d-flex p-align-center p-jc-between">
+            <div class="p-col-3 p-flex-column">
+              <label>Ativo:</label>
+              <p-toggleButton
+                formControlName="active"
+                onLabel="Ativo"
+                offLabel="Inativo"
+                onIcon="'pi pi-check'"
+                offIcon="pi pi-times"
+              ></p-toggleButton>
+            </div>
+
+            <div class="p-col-6">
+              <label>Tipo:</label>
+              <p-dropdown
+                optionLabel="label"
+                optionValue="id"
+                [options]="channelTypeOptions"
+                formControlName="channelType"
+                placeholder="Tipo de canal"
+                [style]="{ width: '100%' }"
+                dataKey="id"
+                class="p-col-12"
+              >
+              </p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="p-col-4 p-offset-2">
+          <div class="campaign-thumb">
+            <label>IMAGEM DO CANAL</label>
+            <figure>
+              <img
+                [src]="
+                  channelForm.get('image').value || '/assets/img/semimagem.jpg'
+                "
+                alt="imagem do canal"
+                style="max-width: 100%; max-height: 250px"
+              />
+              <div class="p-d-flex p-align-center p-jc-between p-col-4">
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  icon="pi pi-upload"
+                  class="p-button-rounded p-button-secondary"
+                  pTooltip="Subir imagem"
+                  tooltipPosition="top"
+                  (click)="imageChannel.click()"
+                >
+                  <input
+                    (change)="getImageChannel($event, imageChannel)"
+                    #imageChannel
+                    hidden
+                    type="file"
+                    accept="image/png, image/jpeg"
+                  />
+                </button>
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-secondary"
+                  pTooltip="Excluir imagem"
+                  tooltipPosition="top"
+                  (click)="channelForm.get('image').value = null"
+                ></button>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="submit-btn">
+          <button [disabled]="channelForm.invalid">Enviar dados</button>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</section>

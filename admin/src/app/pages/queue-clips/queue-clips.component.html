@@ -1,0 +1,193 @@
+<section class="queue-clips">
+  <div *ngIf="isLoading" class="queue-clips-loading">
+    <div>Carregando ...</div>
+  </div>
+
+  <div *ngIf="!isLoading && clipsArray?.length > 0" class="queue-clips-table">
+    <div class="row line-header">
+      <div class="col-xl-2 line-header-font">
+        <p>THUMB</p>
+      </div>
+      <div class="col-xl-1 line-header-font">
+        <p>AUTOR</p>
+      </div>
+      <div class="col-xl-2 line-header-font">
+        <p>TITULO</p>
+      </div>
+      <div class="col-xl-1 line-header-font">
+        <p>LOCAL</p>
+      </div>
+      <div class="col-xl-1 line-header-font">
+        <p>TAMANHO</p>
+      </div>
+      <div class="col-xl-2 line-header-font">
+        <p>DATA</p>
+      </div>
+      <div class="col-xl-2 line-header-font">
+        STATUS
+      </div>
+      <div class="col-xl-1 line-header-font">
+        <p>AÇÕES</p>
+      </div>
+    </div>
+
+    <div class="row queue-table-row" *ngFor="let clip of clipsArray">
+      <div class="col-xl-2 queue-table-cell">
+        <img [src]="clip?.thumbnail || '/assets/img/logo-band-colorido.png'" alt="thumb of video clip">
+      </div>
+      <div class="col-xl-1 queue-table-cell">
+        <p class="queue-table-cell-description">{{ clip?.author }}</p>
+      </div>
+      <div class="col-xl-2 queue-table-cell">
+        <div>
+          <p class="queue-table-cell-title">{{ clip?.title }}</p>
+          <p class="queue-table-cell-description">{{ clip?.description }}</p>
+        </div>
+      </div>
+      <div class="col-xl-1 queue-table-cell">
+        <div class="queue-table-cell-icons" *ngIf="clip?.socialMedias?.length > 0">
+          <div class="queue-table-cell-icons-row">
+            <span *ngFor="let socialMedia of clip?.socialMedias">
+                <span *ngIf="!socialMedia?.link">
+                  <i *ngIf="socialMedia?.socialMedia == 2" class="fab fa-twitter twitter"
+                     [ngStyle]="{'opacity': (socialMedia?.status == 2) ? '1' : '0.4'}"></i>
+                  <i *ngIf="socialMedia?.socialMedia == 1" class="fab fa-facebook facebook"
+                     [ngStyle]="{'opacity': (socialMedia?.status == 2) ? '1' : '0.4'}"></i>
+                  <i *ngIf="socialMedia?.socialMedia == 3" class="fab fa-youtube youtube"
+                       [ngStyle]="{'opacity': (socialMedia?.status == 2) ? '1' : '0.4'}"></i>
+                  <img *ngIf="socialMedia?.socialMedia == 4" [ngStyle]="{'opacity': (socialMedia?.status == 2) ? '1' : '0.4'}"
+                    src='/assets/img/uol.png' alt='icone uol' class="uol">
+                </span>
+                <a *ngIf="socialMedia?.link" [href]="socialMedia?.link" target="_blank">
+                  <i *ngIf="socialMedia?.socialMedia == 2" class="fab fa-twitter twitter"
+                     [ngStyle]="{'opacity': (socialMedia?.status == 2) ? '1' : '0.4'}"></i>
+                  <i *ngIf="socialMedia?.socialMedia == 1" class="fab fa-facebook facebook"
+                     [ngStyle]="{'opacity': (socialMedia?.status == 2) ? '1' : '0.4'}"></i>
+                  <i *ngIf="socialMedia?.socialMedia == 3" class="fab fa-youtube youtube"
+                     [ngStyle]="{'opacity': (socialMedia?.status == 2) ? '1' : '0.4'}"></i>
+                  <img *ngIf="socialMedia?.socialMedia == 4" [ngStyle]="{'opacity': (socialMedia?.status == 2) ? '1' : '0.4'}"
+                    src='/assets/img/uol.png' alt='icone uol' class="uol">
+                </a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-1 queue-table-cell">
+        <p class="queue-table-cell-date">{{ formatClipSizeinMB(clip?.size) }}</p>
+      </div>
+      <div class="col-xl-2 queue-table-cell">
+        <p class="queue-table-cell-date">{{ formatTime(clip?.createdAt) }}</p>
+      </div>
+      <div class="col-xl-2 queue-table-cell">
+        <div class="queue-table-cell-status">
+          <i *ngIf="clip?.status == 2" class="fas fa-check-circle ok"><span
+            class="queue-table-cell-status-text">{{ formatStatus(clip?.status) }}</span></i>
+          <i *ngIf="(clip?.status == 1) || (clip?.status == 3)" class="fas fa-clock pending"><span
+            class="queue-table-cell-status-text">{{ formatStatus(clip?.status) }}</span></i>
+          <i *ngIf="clip?.status == -1" class="fas fa-times-circle error"><span
+            class="queue-table-cell-status-text">{{ formatStatus(clip?.status) }}</span></i>
+        </div>
+      </div>
+
+      <div class="col-xl-1 queue-table-cell action-icons">
+        <span
+          class="download-icon"
+          (click)="downloadClip(clip.id)"
+          *ngIf="clip?.status === 2"
+        >
+          <i class="fas fa-download"></i>
+        </span>
+        <span class="share-icon" (click)="shareModal(clip)">
+          <i class="fas fa-share-alt"></i>
+        </span>
+      </div>
+
+
+    </div>
+  </div>
+  <p-paginator
+    *ngIf="clipsArray?.length > 0"
+    [ngStyle]="{'display': (isLoading) ? 'none' : 'block'}"
+    [rows]="pagination?.quantity"
+    [totalRecords]="pagination?.total"
+    (onPageChange)="paginate($event)">
+  </p-paginator>
+
+
+  <div *ngIf="!isLoading && clipsArray?.length == 0" class="queue-clips-loading">
+    <div>Ops! Não temos resultados para essa busca.</div>
+  </div>
+
+  <!-- Share Modal -->
+  <app-modal-of-sharing [sharedModal]="sharedModal" [clip]="selectedShareClip" (shareModal)="shareModalClose($event)"></app-modal-of-sharing>
+
+  <!-- <p-dialog [(visible)]="showClipDetail" [style]="{width: '50vw', height: '620px'}">
+      <p-header class="queue-detail-reader">
+          <i class="fas fa-edit"><span>Detalhes do Vídeo</span></i>
+      </p-header>
+      <div class="queue-detail-content">
+          <div class="row">
+              <div class="col-xl-4">
+                  <div class="queue-detail-content-image">
+                      <img [src]="clipDetail?.thumbnail || '/assets/img/logo-band-colorido.png'"
+                          alt="thumb of video clip detail">
+                      <div class="queue-detail-content-image-sub">
+                          <p>Fonte:<span>Criado no Stream BAND TV</span></p>
+                          <p>Data:<span>{{ formatTime(clipDetail?.createdAt) }}</span></p>
+                          <p>Duração:<span>05m1</span></p>
+                      </div>
+                  </div>
+                  <div class="queue-detail-content-url">
+                      <p>URL</p>
+                      <div class="queue-detail-content-box">
+                          Url do video/materia/upload
+                      </div>
+                  </div>
+              </div>
+              <div class="col-xl-8">
+                  <div class="queue-detail-content-title">
+                      <p>TITULO</p>
+                      <div class="queue-detail-content-box">
+                          {{ clipDetail?.title }}
+                      </div>
+                  </div>
+                  <div class="queue-detail-content-description">
+                      <p>DESCRIÇÃO</p>
+                      <div class="queue-detail-content-box">
+                          {{ clipDetail?.description }}
+                      </div>
+                  </div>
+                  <div class="queue-detail-content-text" *ngIf="clipDetail?.socialMedias?.length > 0">
+                      <p>LINKS</p>
+                      <div class="queue-detail-content-box">
+                          <div *ngFor="let media of clipDetail?.socialMedias">
+                              <a [href]="media?.link" target="_blank">{{ media?.link }}</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <p-footer>
+          <div class="row">
+              <div class="col-xl-6 queue-detail-footer-icons">
+                  <p>PUBLICADO EM:</p>
+                  <div *ngIf="clipDetail?.socialMedias.length > 0">
+                      <span *ngFor="let socialMedia of removeRepeatedSocialMedia(clipDetail?.socialMedias)">
+                          <i *ngIf="socialMedia?.socialMedia == 2" class="fab fa-twitter twitter"></i>
+                          <i *ngIf="socialMedia?.socialMedia == 1" class="fab fa-facebook facebook"></i>
+                          <i *ngIf="socialMedia?.socialMedia == 3" class="fab fa-youtube youtube"></i>
+                          <i *ngIf="socialMedia?.socialMedia == 4" class="fas fa-globe globe"></i>
+                      </span>
+                  </div>
+              </div>
+              <div class="col-xl-6 col-xl-6 queue-detail-footer-buttons">
+                  <button><i class="fas fa-trash-alt"></i><div>EXCLUIR</div></button>
+                  <button><i class="fas fa-download"></i><div>DOWNLOAD</div></button>
+                  <button><i class="fas fa-edit"></i><div>EDITAR</div></button>
+                  <button><i class="fas fa-copy"></i><div>DUPLICAR</div></button>
+              </div>
+          </div>
+      </p-footer>
+  </p-dialog> -->
+</section>

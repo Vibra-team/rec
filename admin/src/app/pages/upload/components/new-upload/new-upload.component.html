@@ -1,0 +1,103 @@
+<section class="upload-form">
+    <form [formGroup]="uploadForm">
+        <div class="row">
+            <div class="col-xl-3">
+                <div style="margin: 36px;">
+                    <button (click)="sendUploadVideo()" [disabled]="isSendingForm || !uploadForm.valid"
+                        class="section-submit__buttons--item">
+                        Salvar e Publicar
+                    </button>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="upload-form-field">
+                    <div>Titulo</div>
+                    <input formControlName="title" class="input-form" type="text" placeholder="Título (Obrigatório)" />
+                </div>
+                <div class="upload-form-field">
+                    <div>Descricao</div>
+                    <textarea formControlName="description" class="text-area-form" rows="3"
+                        placeholder="Descrição (Obrigatório)"></textarea>
+                </div>
+                <div class="upload-form-field">
+                    <div>Publicar em:</div>
+                    <div class="upload-form-field">
+                        <label>Youtube</label>
+                        <p-multiSelect [options]="channelsOptions['idYoutube']"
+                            [(ngModel)]="socialMediasIdSelected['idYoutube']" [ngModelOptions]="{standalone: true}"
+                            [disabled]="channelsOptions['idYoutube']?.length == 0 || isDisabledChannels"
+                            [style]="{'width':'100%'}" (onChange)="refreshSocialMediasSelected()"></p-multiSelect>
+                    </div>
+                    <div class="upload-form-field">
+                        <label>Facebook</label>
+                        <p-multiSelect [options]="channelsOptions['idFacebook']"
+                            [(ngModel)]="socialMediasIdSelected['idFacebook']" [ngModelOptions]="{standalone: true}"
+                            [disabled]="channelsOptions['idFacebook']?.length == 0 || isDisabledChannels"
+                            [style]="{'width':'100%'}" (onChange)="refreshSocialMediasSelected()"></p-multiSelect>
+                    </div>
+                    <div class="upload-form-field">
+                        <label>Uol</label>
+                        <p-multiSelect [options]="channelsOptions['idUol']"
+                            [(ngModel)]="socialMediasIdSelected['idUol']" [ngModelOptions]="{standalone: true}"
+                            [disabled]="channelsOptions['idUol']?.length == 0 || isDisabledChannels"
+                            [style]="{'width':'100%'}" (onChange)="refreshSocialMediasSelected()"></p-multiSelect>
+                    </div>
+                    <div class="upload-form-field">
+                        <label>Twitter</label>
+                        <p-multiSelect [options]="channelsOptions['idTwitter']"
+                            [(ngModel)]="socialMediasIdSelected['idTwitter']" [ngModelOptions]="{standalone: true}"
+                            [disabled]="channelsOptions['idTwitter']?.length == 0 || isDisabledChannels"
+                            [style]="{'width':'100%'}" (onChange)="refreshSocialMediasSelected()"></p-multiSelect>
+                    </div>
+                    <div class="upload-form-field">
+                        <label style="margin-top: 16px;">Tags</label>
+                        <div class="tags__body">
+                            <ng-container formArrayName="tags">
+                                <div *ngFor="let tag of tags.controls; let i = index" class="tags__body--tag">
+                                    <input type="text" class="tags__body--tag--title" [formControl]="tags.controls[i]">
+                                    <i style="color: #fff; cursor: pointer;" class="fas fa-times"
+                                        (click)="removeTag(i)"></i>
+                                </div>
+                                <div class="tags__body--plus" (click)="addTag()">
+                                    <i class="fas fa-plus"></i>
+                                    <span>tag</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="upload-form-field-thumbnail">
+                    <div>Thumbnail</div>
+                    <figure>
+                        <img [src]="uploadForm.get('thumbnail').value || '/assets/img/logo-band-colorido.png'"
+                            alt="Thumbnail for Clip">
+                        <div>
+                            <i class="fas fa-arrow-circle-up" (click)="thumbnailUpload.click()">
+                                <input (change)="getThumbnailUpload($event, thumbnailUpload)" #thumbnailUpload hidden
+                                    type="file" accept="image/png, image/jpeg" />
+                            </i>
+                            <i class="fas fa-trash-alt" style="margin-bottom: 0px;"
+                                (click)="uploadForm.get('thumbnail').setValue(null)"></i>
+                        </div>
+                    </figure>
+                </div>
+                <div class="upload-form-field">
+                    <button class="btn-upload" (click)="fileUpload.click()">Subir Video MP4</button>
+                    <input (change)="getFileUpload($event, fileUpload)" #fileUpload hidden type="file"
+                        accept="video/mp4" />
+                        
+                    <div *ngIf="!videoFile">
+                        <p>Nenhum Video Carregado</p>
+                    </div>
+                    <div *ngIf="videoFile">
+                        <div *ngIf="videoFile?.name">
+                            <strong>Nome:</strong>{{videoFile?.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

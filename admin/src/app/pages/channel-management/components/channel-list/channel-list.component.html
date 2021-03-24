@@ -1,0 +1,38 @@
+<section class="component">
+  <header class="component-header">
+    <h1>Canais</h1>
+    <div>
+      <button (click)="createNewChannel()">
+        <i class="fas fa-plus-circle"></i> Criar novo canal
+      </button>
+    </div>
+  </header>
+
+  <div class="component-body">
+    <div class="component-list">
+<!--      <p-progressBar *ngIf="isLoading" mode="indeterminate"></p-progressBar>-->
+      <div class="loading" *ngIf="isLoading">Carregando ...</div>
+
+      <div *ngIf="!isLoading">
+        <p-tabView (onChange)='handleChange($event)'>
+          <p-tabPanel header="Todos" [selected]="ChannelType == 0">
+            <app-table-list [list]='channelsList'></app-table-list>
+          </p-tabPanel>
+          <p-tabPanel header="Rádio" [selected]="ChannelType == 1">
+            <app-table-list [list]='channelsList'></app-table-list>
+          </p-tabPanel>
+          <p-tabPanel header="Televisão" [selected]="ChannelType == 2">
+            <app-table-list [list]='channelsList'></app-table-list>
+          </p-tabPanel>
+          <p-paginator
+            [rows]="paginate.pageSize"
+            [totalRecords]="paginate.total"
+            [rowsPerPageOptions]="[10,20,30]"
+            (onPageChange)="handleChangePaginate($event)"
+          >
+          </p-paginator>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
+</section>

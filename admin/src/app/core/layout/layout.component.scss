@@ -1,0 +1,9 @@
+.main {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  min-height: 100vh;
+}
+
+.main-nav-hide {
+  grid-template-columns: 80px 1fr;
+}

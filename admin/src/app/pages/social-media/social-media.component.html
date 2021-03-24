@@ -1,0 +1,21 @@
+<section class="component">
+  <header class="component-header">
+    <h1>Mídias sociais</h1>
+    <div>
+      <button (click)="navigation()">
+        <i
+          *ngIf="navigationComponent === 'create'"
+          class="fas fa-plus-circle p-mr-4"
+        ></i>
+        <i *ngIf="navigationComponent === 'list'" class="fas fa-list p-mr-4"></i
+        >{{
+          navigationComponent === 'create'
+            ? 'criar nova mídia'
+            : 'lista de mídias'
+        }}
+      </button>
+    </div>
+  </header>
+  <hr />
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
+</section>

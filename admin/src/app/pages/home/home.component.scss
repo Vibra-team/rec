@@ -1,0 +1,168 @@
+.nav-home {
+  -webkit-box-shadow: 0px 1px 2px 0px #ededed;
+  -moz-box-shadow: 0px 1px 2px 0px #ededed;
+  box-shadow: 0px 1px 2px 0px #ededed;
+  height: 60px;
+  background: #ffff;
+  display: flex;
+
+  .container-nav {
+    padding: 0px 110px;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .title-nav {
+    font-size: 1rem;
+    line-height: 18px;
+    color: #222730;
+    font-weight: 600;
+  }
+
+  .section-nav {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.button-showhide {
+  padding: 5px 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  display: flex;
+}
+
+.user-nav {
+  span {
+    font-size: 1rem;
+    line-height: 18px;
+    color: #222730;
+    font-weight: 400;
+  }
+
+  span i {
+    margin-right: 5px;
+  }
+}
+
+.body-container {
+  padding: 60px 140px;
+
+  .loading-spinner {
+    font-size: 48px;
+    text-align: center;
+  }
+}
+
+.header-body {
+  height: 40px;
+  display: flex;
+  margin-bottom: 20px;
+
+  span {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #000000;
+    display: flex;
+    text-transform: uppercase;
+
+    i {
+      font-size: 0.7rem;
+      padding-top: 5px;
+      padding-right: 5px;
+      color: #f31733;
+    }
+  }
+}
+
+p-tabview::ng-deep.p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #f7f7f7;
+  font-weight: 400;
+  color: #000000;
+  text-transform: uppercase;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  margin-right: 40px;
+}
+
+p-tabview::ng-deep.p-tabview-nav .p-tabview-nav-link {
+  background: #f7f7f7;
+  font-weight: 400;
+  color: #b9bfc7;
+  text-transform: uppercase;
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+  margin-right: 40px;
+}
+
+p-tabview::ng-deep.p-tabview-nav {
+  background: #f7f7f7;
+}
+
+p-tabview::ng-deep.p-tabview .p-tabview-panels {
+  background: #f7f7f7;
+  padding-left: 0;
+}
+
+p-tabview::ng-deep.p-tabview.p-component
+  .p-tabview-nav
+  .p-highlight
+  .p-tabview-nav-link {
+  color: #000000;
+  border-color: #f31632 !important;
+}
+
+p-tabview::ng-deep.p-tabview
+  .p-tabview-nav
+  li
+  .p-tabview-nav-link:not(.p-disabled):focus {
+  box-shadow: none;
+}
+
+.d-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 200px);
+  column-gap: 60px;
+  row-gap: 50px;
+  padding-top: 50px;
+
+  .d-item {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffff;
+    -webkit-box-shadow: 0px 0px 5px 2px rgba(237, 237, 237, 1);
+    -moz-box-shadow: 0px 0px 5px 2px rgba(237, 237, 237, 1);
+    box-shadow: 0px 0px 5px 2px rgba(237, 237, 237, 1);
+
+    img {
+      width: 100%;
+      height: 200px;
+      border-radius: 50%;
+    }
+  }
+
+  .d-title {
+    font-size: 1.125rem;
+    line-height: 18px;
+    color: #000000;
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+
+    i {
+      font-size: 0.5rem;
+      padding-right: 5px;
+      color: #f31733;
+    }
+  }
+}

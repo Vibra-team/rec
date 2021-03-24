@@ -1,0 +1,92 @@
+<div>
+  <div class="p-grid p-mt-4">
+    <div class="p-col">
+      <div class="form-group">
+        <label for="">Nome :</label>
+        <input #nome type="text" class="form-control" />
+      </div>
+    </div>
+    <div class="p-col-2 p-d-flex p-jc-center p-ai-center">
+      <div class="form-group">
+        <label for="">Ativo :</label>
+        <br />
+        <p-inputSwitch [(ngModel)]="checked" #active></p-inputSwitch>
+      </div>
+    </div>
+    <div class="p-col">
+      <div class="form-group">
+        <label for="">Tipo de mídia :</label>
+        <select #tipo class="form-control" name="" id="">
+          <option value="">Selecione</option>
+          <option value="1">Facebook</option>
+          <option value="2">Twitter</option>
+          <option value="3">Youtube</option>
+          <option value="4">Uol</option>
+        </select>
+      </div>
+    </div>
+    <div class="p-col p-d-flex p-ai-center p-ml-4 p-mt-3">
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-search"
+        class="p-button-rounded p-button-primary"
+        pTooltip="Buscar"
+        (click)="filtrarLista(nome.value, active.checked, tipo.value)"
+      ></button>
+    </div>
+  </div>
+</div>
+<hr />
+<p-table [value]="socialMedias">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nome</th>
+      <th>Ativo</th>
+      <th>Credencial</th>
+      <th>Tipo de mídia</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-socialMedia>
+    <tr>
+      <td>{{ socialMedia?.name }}</td>
+      <td>{{ socialMedia?.active ? 'Sim' : 'Não' }}</td>
+      <td class="p-text-nowrap p-text-truncate">
+        {{ socialMedia?.credential }}
+      </td>
+      <td>
+        {{ enumSocialMidia[socialMedia?.socialMedia] }}
+      </td>
+      <td>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-user-edit"
+          class="p-button-rounded p-button-secondary"
+          pTooltip="Editar"
+          (click)="editaMidiaSocial(socialMedia?.id)"
+        ></button>
+
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-danger p-ml-4"
+          pTooltip="Excluir"
+          (click)="deletaMidia(socialMedia?.id, socialMedia?.name)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-paginator
+  [rows]="paginate.pageSize"
+  [totalRecords]="paginate.total"
+  (onPageChange)="handleChangePaginate($event)"
+>
+</p-paginator>
+
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>

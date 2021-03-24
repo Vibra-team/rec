@@ -1,0 +1,247 @@
+<div class="d-edicao">
+
+  <!-- INIT EDITOR-->
+  <div class="d-edicao__body">
+    <div class="edtior-header">
+      <div class="edtior-header__dropdowns">
+        <div class="edtior-header__drop-type">
+          <span class="text--color">Tipo</span>
+          <span *ngIf="channelType == channelEnum.TV" class="text"><i class="fas fa-tv"></i> Vídeo</span>
+          <span *ngIf="channelType == channelEnum.Radio" class="text"><i class="fas fa-tv"></i> Áudio</span>
+        </div>
+        <div *ngIf="channelType == channelEnum.TV" class="edtior-header__drop-scale">
+          <span class="text--color">Tamanho</span>
+          <!-- <span class="text"><i class="fas fa-tv"></i> Horizontal(16:9)</span> -->
+          <select [(ngModel)]="aspectRatioValue" class="form-control" style="margin: 0px 20px">
+            <option value="16:9">Horizontal (16:9)</option>
+            <option value="1:1">Square (1:1)</option>
+            <option value="9:16" >Vertical (9:16)</option>
+            <option value="4:5">Social (4:5)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <app-video-player (videoDuration)="getVideoDuration($event)" (thumbnail)="getThumbnail($event)" (offsetTime)="getOffsetTime($event)"
+      (startCutTime)="getStartCutTime($event)" (endCutTime)="getEndCutTime($event)" (videoId)="getVideoId($event)" (changeTime)="getChangeTimeFromVideo($event)"
+      [currentTimeVideo]="changeTimeVideo" [videoPreview]="videoPreview" [aspectRatioValue]="aspectRatioValue"></app-video-player>
+
+    <div class="container-slice" *ngIf="maxVideo">
+      <p-slider [(ngModel)]="rangeTimes" [range]="true" [min]="0" [max]="maxVideo" (onChange)="getChangeTimes($event)"
+        [step]="0.01"></p-slider>
+      <div class="container-slice__cut">
+        <div class="u-flex">
+          <div>
+            <span class="container-slice__cut--title">Início : </span>{{ formatTime(rangeTimes[0]) }}
+          </div>
+          <div>
+            <span class="container-slice__cut--title">FIM : </span>
+            {{ formatTime(rangeTimes[1]) }}
+          </div>
+
+          <div>
+            <span class="container-slice__cut--title">Corte : </span>
+            {{ getDiferenceBetweenEndAndStart()  }}
+          </div>
+        </div>
+
+        <div style="display: flex;">
+          <div style="display: flex; align-items: center; margin: 0px 16px;">
+            <label style="margin-right: 8px;" for="checkbox_active">Gerar Gif</label>
+            <p-inputSwitch [disabled]="channelType == channelEnum.Radio" [(ngModel)]="isGif"></p-inputSwitch>
+          </div>
+          <button (click)="setcut()" type="button" class="button-cut">
+            Cortar
+          </button>
+        </div>
+      </div>
+      <div *ngIf="cuts.controls.length">
+        <h2>Cortes</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">INÍCIO</th>
+              <th scope="col">FIM</th>
+              <th scope="col">CORTE</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cuts.controls; let i = index">
+              <td>{{ formatTimeCuts(cuts?.controls[i]?.value?.offsetTime, cuts?.controls[i]?.value?.start) }}</td>
+              <td>{{ formatTimeCuts(cuts?.controls[i]?.value?.offsetTime, cuts?.controls[i]?.value?.finish) }}</td>
+              <td>{{ cuts?.controls[i]?.value?.cut }}</td>
+              <td>
+                <button class="delete-button" type="button" (click)="removeCut(i)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+              <td style="text-align: center;">
+                <button type="button" class="preview-button" (click)="setPreview(i)">Preview</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- FIM EDITOR-->
+
+  <!-- INIT SIDE BAR-->
+  <div class="d-edicao__sidebar" [formGroup]="editionForm">
+    <div class="section-save">
+      <div class="section-save__header">
+        <p class="section-save__header--title">Salvar em</p>
+        <a [routerLink]="['/campaigns/new']" routerLinkActive="router-link-active" class="section-save__header--link"><i
+            class="fas fa-plus-circle"></i> Criar nova campanha</a>
+      </div>
+      <p-dropdown *ngIf="campaignOptions?.length > 1" formControlName="idCampaign" [options]="campaignOptions"
+        placeholder="Selecione uma campanha" optionLabel="label" dataKey="id" [style]="{'width':'100%'}"></p-dropdown>
+    </div>
+    <hr />
+    <div class="section-details">
+      <p class="title">Detalhes</p>
+      <div class="section-details__display">
+        <div class="section-details__thumbnail">
+          <div class="section-details__thumbnail--header">
+            <span>thumbnail</span>
+          </div>
+          <div class="section-details__thumbnail--image">
+            <img style="object-fit: cover;" *ngIf="thumbnailPreview && !isGif" [src]="thumbnailPreview" crossOrigin="anonymous" height="100%" width="100%" />
+            <img style="object-fit: cover;" *ngIf="channelType == channelEnum.Radio && editionForm.get('thumbnail').value && !thumbnailPreview" [src]="editionForm.get('thumbnail').value" crossOrigin="anonymous" height="100%" width="100%" />
+          </div>
+        </div>
+        <div class="section-details__buttons">
+          <button class="section-details__buttons--item" (click)="thumbnailClip.click()" [disabled]="isGif" [ngClass]="{'gif-disabled': isGif}">
+            <i class="fas fa-arrow-circle-up"></i>
+            <span>Carregar</span>
+            <input (change)="getThumbnailClip($event, thumbnailClip)" #thumbnailClip hidden type="file"
+              accept="image/png, image/jpeg, image/webp" />
+          </button>
+          <a *ngIf="thumbnailPreview && !isGif" [href]="thumbnailPreview" class="section-details__buttons--item" [ngClass]="{'gif-disabled': isGif}" download>
+            <i class="fas fa-download"></i>
+            <span>Download</span>
+          </a>
+          <a *ngIf="!thumbnailPreview || (thumbnailPreview && isGif)" class="section-details__buttons--item" [ngClass]="{'gif-disabled': (isGif || channelType == channelEnum.Radio)}">
+            <i class="fas fa-download"></i>
+            <span>Download</span>
+          </a>
+          <!-- <button class="section-details__buttons--item">
+          </button> -->
+        </div>
+        <!-- <div class="section-details__description">
+          <div class="section-details__description--item">
+            <span class="section-details__description--title">Tipo</span>
+            <span class="section-details__description--content-description">Vídeo</span>
+          </div>
+          <div class="section-details__description--item">
+            <span class="section-details__description--title">Tamanho</span>
+            <span class="section-details__description--content-description">16:9</span>
+          </div>
+          <div class="section-details__description--item">
+            <span class="section-details__description--title">Duração</span>
+            <span class="section-details__description--content-description">00:06:03</span>
+          </div>
+        </div> -->
+      </div>
+      <div class="section-details__form" style="margin-top: -16px;">
+        <input formControlName="title" class="input-form" type="text" placeholder="Título (Obrigatório)" />
+        <textarea formControlName="description" class="text-area-form" rows="3"
+          placeholder="Descrição (Obrigatório)"></textarea>
+      </div>
+      <div class="section-pub-in__sub-item mt-3">
+        <label class="section-pub-in__label">Agendamento</label>
+        <p-calendar
+          formControlName="schedulingDate"
+          placeholder="Data agendamento"
+          showIcon="true"
+          showTime="true"
+          hourFormat="24"
+          [locale]="calendarConfig"
+          dateFormat="dd/mm/yy"
+          [minDate]="minData"
+        ></p-calendar>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="section-pub-in">
+      <p class="title">Publicar em</p>
+      <div class="section-pub-in__sub-item">
+        <label class="section-pub-in__label">Youtube</label>
+        <p-multiSelect [options]="channelsOptions['idYoutube']" [(ngModel)]="socialMediasIdSelected['idYoutube']"
+          [ngModelOptions]="{standalone: true}" [disabled]="channelsOptions['idYoutube']?.length == 0 || isDisabledChannels || isGif"
+          [style]="{'width':'100%'}" (onChange)="refreshSocialMediasSelected()"></p-multiSelect>
+      </div>
+      <div class="section-pub-in__sub-item">
+        <label class="section-pub-in__label">Facebook</label>
+        <p-multiSelect [options]="channelsOptions['idFacebook']" [(ngModel)]="socialMediasIdSelected['idFacebook']"
+          [ngModelOptions]="{standalone: true}" [disabled]="channelsOptions['idFacebook']?.length == 0 || isDisabledChannels"
+          [style]="{'width':'100%'}" (onChange)="refreshSocialMediasSelected()"></p-multiSelect>
+      </div>
+      <div class="section-pub-in__sub-item">
+        <label class="section-pub-in__label">Uol</label>
+        <p-multiSelect [options]="channelsOptions['idUol']" [(ngModel)]="socialMediasIdSelected['idUol']"
+          [ngModelOptions]="{standalone: true}" [disabled]="channelsOptions['idUol']?.length == 0 || isDisabledChannels || isGif"
+          [style]="{'width':'100%'}" (onChange)="refreshSocialMediasSelected()"></p-multiSelect>
+      </div>
+      <div class="section-pub-in__sub-item">
+        <label class="section-pub-in__label">Twitter<span *ngIf="twitterAlert">{{ twitterAlert }}</span></label>
+        <p-multiSelect [options]="channelsOptions['idTwitter']" [(ngModel)]="socialMediasIdSelected['idTwitter']"
+          [ngModelOptions]="{standalone: true}" [disabled]="channelsOptions['idTwitter']?.length == 0 || isDisabledChannels"
+          [style]="{'width':'100%'}" (onChange)="refreshSocialMediasSelected()"></p-multiSelect>
+      </div>
+    </div>
+    <hr />
+    <div class="section-pub-in">
+      <p class="title">Monetização</p>
+      <div class="section-pub-in__sub-item" style="display: flex; align-items: center;">
+        <label class="section-pub-in__label">
+          <img src='/assets/img/uol.png' alt='icone uol'> 
+          Uol
+        </label>
+        <p-inputSwitch [disabled]="(socialMediasIdSelected['idUol'].length) == 0" 
+          [(ngModel)]="isUolMonetize" [ngModelOptions]="{standalone: true}" (onChange)="handlerUolChange($event)"></p-inputSwitch>
+        <!-- <p-multiSelect [options]="channelsOptions['monetize']" [(ngModel)]="socialMediasIdSelected['monetize']"
+          [ngModelOptions]="{standalone: true}" [disabled]="channelsOptions['monetize']?.length == 0 || isDisabledChannels"
+          [style]="{'width':'100%'}">
+        </p-multiSelect> -->
+      </div>
+    </div>
+    <hr />
+    <div class="section-tags">
+      <p class="title">Tags</p>
+      <div class="section-tags__body">
+        <ng-container formArrayName="tags">
+          <div *ngFor="let tag of tags.controls; let i = index" class="section-tags__body--tag">
+            <input type="text" class="section-tags__body--tag--title" [formControl]="tags.controls[i]">
+            <i style="color: #fff; cursor: pointer;" class="fas fa-times" (click)="removeTag(i)"></i>
+          </div>
+          <div class="section-tags__body--plus" (click)="plusTag()">
+            <i class="fas fa-plus"></i>
+            <span>tag</span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <hr />
+    <div *ngIf="verifyMinimumCutAlert()">
+      <p style="text-align: center;"> {{ verifyMinimumCutAlert() }} </p>
+      <hr />
+    </div>
+    <div class="section-submit">
+      <div class="section-submit__buttons">
+        <button class="section-submit__buttons--item-back">
+          <i class="fas fa-redo"></i> Voltar
+        </button>
+        <button (click)="sendVideoEditon()" [disabled]="isSendingForm || !editionForm.valid || cuts.length == 0"
+          class="section-submit__buttons--item-pub">
+          Salvar e Publicar
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- FIM SIDE BAR-->
+
+</div>

@@ -1,0 +1,61 @@
+<div class="p-grid p-mt-4">
+  <small class="p-error">*Todos os campos são obrigatórios </small>
+</div>
+
+<form [formGroup]="form">
+  <div class="p-grid p-mt-4">
+    <div class="p-col">
+      <div class="form-group">
+        <label for="">Nome :</label>
+        <input formControlName="name" type="text" class="form-control" />
+      </div>
+    </div>
+    <div class="p-col-2 p-d-flex p-jc-center p-ai-center">
+      <div class="form-group">
+        <label for="">Ativo :</label>
+        <br />
+        <p-inputSwitch formControlName="active"></p-inputSwitch>
+      </div>
+    </div>
+    <div class="p-col">
+      <div class="form-group">
+        <label for="">Tipo de mídia :</label>
+        <select
+          formControlName="socialMedia"
+          class="form-control"
+          name=""
+          id=""
+        >
+          <option value="">Selecione</option>
+          <option value="1">Facebook</option>
+          <option value="2">Twitter</option>
+          <option value="3">Youtube</option>
+          <option value="4">Uol</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="p-grid p-mt-4">
+    <div class="p-col">
+      <div class="form-group">
+        <label for="">Credenciais :</label>
+        <textarea
+          formControlName="credential"
+          class="form-control"
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="p-grid p-mt-4">
+  <div class="submit-btn">
+    <button [disabled]="form.invalid" (click)="submitForm()">
+      {{ id ? 'Editar' : 'Salvar' }}
+    </button>
+  </div>
+</div>

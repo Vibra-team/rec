@@ -1,0 +1,38 @@
+.component {
+  padding: 60px 140px;
+  background: #f7f7f7;
+
+  &-body {
+    background: #f7f7f7;
+
+
+    .component-list {
+      >div {
+      p-tabView {
+          background: red;
+          font-size: 40px;
+        }
+      }
+    }
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    background: #f7f7f7;
+
+
+    div button {
+      padding: 8px 16px;
+      color: #ffff;
+      background-color: #f31632;
+      border: none;
+    }
+  }
+}
+
+
+
+

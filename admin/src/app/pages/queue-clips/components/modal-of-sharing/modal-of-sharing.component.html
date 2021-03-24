@@ -1,0 +1,137 @@
+<p-dialog header="Publicar em" [(visible)]="sharedModal" [style]="{width: '50vw'}" blockScroll="true" modal="true" (visibleChange)="fecharModal()" (onShow)="onShowModal()">
+  <div class="section-pub-in" class="container">
+    <form [formGroup]="sharingModalForm" (ngSubmit)="onSubmit()">
+<!--      <div class="row">-->
+<!--        <div class="col-6">-->
+<!--          <div>-->
+<!--            <label>Nome:</label>-->
+<!--            <input formControlName="title" class="input-form" type="text" placeholder="Título (Obrigatório)" style="height: 43px;" />-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <label>Descricao:</label>-->
+<!--            <textarea-->
+<!--              formControlName="description"-->
+<!--              class="text-area-form"-->
+<!--              rows="3"-->
+<!--              placeholder="Descrição (Obrigatório)"-->
+<!--            ></textarea>-->
+<!--          </div>-->
+
+<!--        </div>-->
+<!--        <div class="col-6">-->
+<!--          <div class="section-details__thumbnail">-->
+<!--            <div class="section-details__thumbnail&#45;&#45;header">-->
+<!--              <span>thumbnail</span>-->
+<!--            </div>-->
+<!--            <div class="section-details__thumbnail&#45;&#45;image">-->
+<!--              <img [src]="thumbnailPreview || clip?.thumbnail" crossOrigin="anonymous" height="100%" width="100%" />-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="image-btn">-->
+
+<!--            <button pButton type="button" label="Carregar"-->
+<!--                    icon="pi pi-upload" class="p-button-secondary p-button-sm p-button-rounded">-->
+<!--              <input (change)="getThumbnailClip($event, thumbnailClip)" #thumbnailClip hidden type="file"-->
+<!--                     accept="image/png, image/jpeg, image/webp" />-->
+<!--            </button>-->
+
+<!--            <a [href]="thumbnailPreview" download>-->
+<!--              <button pButton type="button" label="Download"-->
+<!--                      icon="pi pi-download" class="p-button-secondary p-button-sm p-button-rounded"></button>-->
+<!--            </a>-->
+
+<!--            <button class="" (click)="thumbnailClip.click()" [disabled]="isGif" [ngClass]="{'gif-disabled': isGif}">-->
+<!--              <i class="fas fa-arrow-circle-up"></i>-->
+<!--              <span>Carregar</span>-->
+<!--              <input (change)="getThumbnailClip($event, thumbnailClip)" #thumbnailClip hidden type="file"-->
+<!--                     accept="image/png, image/jpeg, image/webp" />-->
+<!--            </button>-->
+<!--            <button>Download</button>-->
+<!--            <a *ngIf="thumbnailPreview && !isGif" [href]="thumbnailPreview" class="section-details__buttons&#45;&#45;item" [ngClass]="{'gif-disabled': isGif}" download>-->
+<!--              <i class="fas fa-download"></i>-->
+<!--              <span>Download</span>-->
+<!--            </a>-->
+<!--            <a *ngIf="!thumbnailPreview || (thumbnailPreview && isGif)" class="section-details__buttons&#45;&#45;item" [ngClass]="{'gif-disabled': isGif}">-->
+<!--              <i class="fas fa-download"></i>-->
+<!--              <span>Download</span>-->
+<!--            </a>-->
+            <!-- <button class="section-details__buttons--item">
+            </button> -->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--      </div>-->
+      <div class="row">
+        <div class="section-pub-in__sub-item col-6">
+          <label class="section-pub-in__label">Youtube</label>
+          <p-multiSelect
+            [options]="channelsOptions['idYoutube']"
+            [(ngModel)]="socialMediasIdSelected['idYoutube']"
+            [ngModelOptions]="{standalone: true}"
+            [style]="{'width':'100%'}"
+            placeholder="Selecione para Youtube"
+          ></p-multiSelect>
+        </div>
+        <div class="section-pub-in__sub-item col-6">
+          <label class="section-pub-in__label">Facebook</label>
+          <p-multiSelect
+            [(ngModel)]="socialMediasIdSelected['idFacebook']"
+            [ngModelOptions]="{standalone: true}"
+            [options]="channelsOptions['idFacebook']"
+            [style]="{'width':'100%'}"
+            placeholder="Selecione para Facebook"
+          ></p-multiSelect>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="section-pub-in__sub-item col-6">
+          <label class="section-pub-in__label">Uol</label>
+          <p-multiSelect
+            [options]="channelsOptions['idUol']"
+            [(ngModel)]="socialMediasIdSelected['idUol']"
+            [ngModelOptions]="{standalone: true}"
+            [style]="{'width':'100%'}"
+            placeholder="Selecione para Uol"
+          ></p-multiSelect>
+        </div>
+        <div class="section-pub-in__sub-item col-6">
+          <label class="section-pub-in__label">Twitter</label>
+          <p-multiSelect
+            [options]="channelsOptions['idTwitter']"
+            [(ngModel)]="socialMediasIdSelected['idTwitter']"
+            [ngModelOptions]="{standalone: true}"
+            [style]="{'width':'100%'}"
+            placeholder="Selecione para Twitter"
+          ></p-multiSelect>
+        </div>
+      </div>
+
+<!--      <div class="section-tags">-->
+<!--        <p class="title">Tags</p>-->
+<!--        <div class="section-tags__body">-->
+<!--          <ng-container>-->
+<!--            <div *ngFor="let tag of tagsArray; let i = index" class="section-tags__body&#45;&#45;tag">-->
+<!--              <input-->
+<!--                type="text"-->
+<!--                class="section-tags__body&#45;&#45;tag&#45;&#45;title"-->
+<!--                [(ngModel)]="tagsArray[i]"-->
+<!--                [ngModelOptions]="{standalone: true}"-->
+<!--              >-->
+<!--              <i style="color: #fff; cursor: pointer;" class="fas fa-times" (click)="removeTag(i)"></i>-->
+<!--            </div>-->
+<!--            <div class="section-tags__body&#45;&#45;plus" (click)="addTag()">-->
+<!--              <i class="fas fa-plus"></i>-->
+<!--              <span>tag</span>-->
+<!--            </div>-->
+<!--          </ng-container>-->
+<!--        </div>-->
+<!--      </div>-->
+
+      <div class="row mt-5 mx-auto" style="width: 100%">
+        <p-button type="submit" label="Publicar" class="publish-btn" [disabled]="!sharingModalForm.valid"></p-button>
+      </div>
+    </form>
+
+  </div>
+</p-dialog>

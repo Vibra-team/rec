@@ -1,0 +1,153 @@
+.header-component {
+	.nav-home {
+		-webkit-box-shadow: 0px 1px 2px 0px #ededed;
+		-moz-box-shadow: 0px 1px 2px 0px #ededed;
+		box-shadow: 0px 1px 2px 0px #ededed;
+		height: 60px;
+		background: #ffff;
+		display: flex;
+		.container-nav {
+			padding: 0px 110px;
+			height: 100%;
+			width: 100%;
+			.calendar-btn {
+				width: 50%;
+				height: 60px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: #000;
+				text-transform: uppercase;
+				font-size: 1.125rem;
+			}
+			.cancel {
+				border: 1px solid #ececec;
+				background: #ececec;
+			}
+			.ok {
+				border: none;
+				background: #ffe329;
+			}
+			.search-fields {
+				label {
+					margin-right: 16px;
+				}
+			}
+		}
+		.title-nav {
+			font-size: 1rem;
+			line-height: 18px;
+			color: #222730;
+			font-weight: 600;
+		}
+		.section-nav {
+			display: flex;
+			height: 100%;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+	.button-logout {
+		background: #000000;
+		color: #ffff;
+		text-transform: uppercase;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: none;
+		border-radius: 20px;
+		width: 100px;
+		height: 30px;
+		margin-left: 20px;
+		&:hover {
+			opacity: 0.6;
+		}
+	}
+	.button-showhide {
+		padding: 5px 10px;
+		background: transparent;
+		border: none;
+		font-size: 1.5rem;
+		display: flex;
+	}
+	p-calendar::ng-deep.p-datepicker table td>span.p-highlight {
+		background: #f31733 !important;
+	}
+	p-calendar::ng-deep.p-button {
+		background: #f31733 !important;
+	}
+	p-calendar::ng-deep.p-inputtext:enabled:focus {
+		border-color: transparent;
+		box-shadow: none;
+	}
+	p-calendar::ng-deep.p-inputtext:enabled:hover {
+		border-color: #f31733;
+	}
+	p-calendar::ng-deep.p-button:enabled:hover {
+		border-color: #f31733;
+		background: none;
+	}
+	p-calendar::ng-deep.p-button:focus {
+		box-shadow: none;
+	}
+	p-calendar::ng-deep.p-button {
+		border: 1px solid #f31733;
+	}
+
+	.container-nav-search {
+		padding: 0px 16px;
+		height: 100%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+
+		.calendar-btn {
+			width: 50%;
+			height: 60px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: #000;
+			text-transform: uppercase;
+			font-size: 1.125rem;
+		}
+		.cancel {
+			border: 1px solid #ececec;
+			background: #ececec;
+		}
+		.ok {
+			border: none;
+			background: #ffe329;
+		}
+
+		.vertical-align {
+			display: flex;
+			align-items: center;
+		}
+
+		.select-padding {
+			padding: 0px 20px;
+
+			i {
+				margin-right: 8px;
+			}
+		}
+
+		.search-fields {
+			padding: 0px 16px;
+			border-right: 2px solid #e2e2e2;
+			display: flex;
+			align-items: center; 
+			justify-content: space-between;
+
+			label {
+				margin-right: 16px;
+			}
+		}
+	}
+
+	.channel-select {
+		padding: 0px 16px;
+		margin-left: -7px;
+	}
+}

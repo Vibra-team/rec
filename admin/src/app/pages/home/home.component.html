@@ -1,0 +1,52 @@
+<section class="body-container">
+  <div class="header-body">
+    <span><i class="fas fa-circle"></i> Sinais</span>
+  </div>
+  <p-tabView *ngIf="!isLoadingMenu">
+    <p-tabPanel header="Todos">
+      <div class="d-grid">
+        <div *ngFor="let channel of channelList">
+          <a [routerLink]="['/edicao', channel?.channelType, channel?.id]">
+            <div class="d-item">
+              <figure>
+                <img src="{{channel.image}}" alt="logo" />
+              </figure>
+            </div>
+            <p class="d-title"><i class="fas fa-circle"></i>{{ channel?.name }}</p>
+          </a>
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Televisão">
+      <div class="d-grid">
+        <div *ngFor="let channel of tvChannelList">
+          <a [routerLink]="['/edicao', channel?.channelType, channel?.id]">
+            <div class="d-item">
+              <figure>
+                <img src="{{channel.image}}" alt="logo" />
+              </figure>
+            </div>
+            <p class="d-title"><i class="fas fa-circle"></i>{{ channel?.name }}</p>
+          </a>
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Rádio">
+      <div class="d-grid">
+        <div *ngFor="let channel of radioChannelList">
+          <a [routerLink]="['/edicao', channel?.channelType, channel?.id]">
+            <div class="d-item">
+              <figure>
+                <img src="{{channel.image}}" alt="logo" />
+              </figure>
+            </div>
+            <p class="d-title"><i class="fas fa-circle"></i>{{ channel?.name }}</p>
+          </a>
+        </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+  <div *ngIf="isLoadingMenu" class="loading-spinner">
+    <i class="fa fa-spinner fa-spin"></i>
+  </div>
+</section>

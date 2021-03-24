@@ -1,0 +1,28 @@
+.component {
+  padding: 60px 140px;
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+
+    div button {
+      padding: 8px 16px;
+      color: #ffff;
+      background-color: #f31632;
+      border: none;
+    }
+  }
+}
+
+.submit-btn {
+  text-align: center;
+  margin-top: 32px;
+  button {
+    background-color: #ffe329;
+    border: none;
+    padding: 16px 32px;
+    font-weight: 600;
+  }
+}

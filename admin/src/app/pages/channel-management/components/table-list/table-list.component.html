@@ -1,0 +1,78 @@
+<p-dataView
+  #dv
+  [value]="newList"
+  filterBy='name'
+  class="container-table"
+>
+  <ng-template pTemplate="header" class="p-mb-5 p-mt-3">
+    <div class="p-d-flex p-jc-between">
+      <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+        <i class="pi pi-search"></i>
+        <input type="search" pInputText placeholder="Buscar por nome" (input)="dv.filter($event.target['value'], 'contains')">
+      </span>
+      <span (click)='changeHandlerLayout(dv)'>
+        <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+      </span>
+    </div>
+    <p-header *ngIf="layout === 'list'">
+      <div class="p-d-flex p-align-center p-jc-between p-mb-3 p-mt-3 table-header" >
+        <div class="p-col-5 p-d-flex p-align-center p-jc-between">
+          Nome
+        </div>
+        <div class="p-col-3 p-ml-lg-4">Tipo</div>
+        <div class="p-col-2 p-ml-lg-4">
+          Ativo
+        </div>
+        <div class='p-col-2 p-d-flex p-jc-around'>
+          Editar
+        </div>
+      </div>
+    </p-header>
+  </ng-template>
+
+  <ng-template let-item pTemplate="listItem" style='background-color: red !important;'>
+    <div class="p-d-flex p-align-center p-jc-between card-style">
+      <div class="p-col-5 p-d-flex p-align-center p-jc-between" style='height: 150px;'>
+        <img src="{{ item.image }}" class="p-col-4 p-p-0" alt="Imagem do canal">
+        <div class="p-col-6">{{ item.name }}</div>
+      </div>
+      <div class="p-col-3 p-ml-lg-4">{{ item.channelType === 1 ? 'Rádio' : 'Televisão' }}</div>
+      <div class="p-col-2 p-ml-lg-4">
+        <i class="pi pi-check" *ngIf="item.active" style="color: green" pTooltip="Ativo"></i>
+        <i class="pi pi-times" *ngIf="!item.active" style="color: red" pTooltip="Não ativo"></i>
+      </div>
+      <div class='p-col-2 p-d-flex p-jc-around' (click)='routeToEdit(item.id)'>
+        <button pButton pRipple type="button" icon="pi pi-user-edit" class="p-button-rounded p-button-secondary"  pTooltip="Editar"></button>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <ng-template let-item pTemplate="gridItem">
+    <div class="p-col-12 p-md-4 p-flex-column p-align-center">
+      <div class='card'>
+        <div class="p-col-12 p-flex-column p-align-center">
+          <div class='card p-d-flex p-align-center p-jc-center p-mb-4' style='background-color: #eee; height: 150px;'>
+            <img src="{{ item.image }}" class="p-col-10" alt="Imagem do canal" style="height: 100%;">
+          </div>
+          <div class="p-d-flex p-jc-start p-align-center p-ml-3">
+            <span class='p-text-bold p-mr-2'>Nome: </span>
+            <span>{{ item.name }}</span>
+          </div>
+        </div>
+        <div class="p-d-flex p-jc-start p-align-center p-ml-4 p-pb-2">
+          <span class='p-text-bold  p-mr-2'>Tipo: </span>
+          <span>{{ item.channelType === 1 ? 'Rádio' : 'Televisão' }}</span>
+        </div>
+        <div class="p-d-flex p-jc-start p-align-center p-ml-4">
+          <span class='p-text-bold p-mr-2'>Ativo: </span>
+          <i class="pi pi-check" *ngIf="item.active" style="color: green" pTooltip="Ativo"></i>
+          <i class="pi pi-times" *ngIf="!item.active" style="color: red" pTooltip="Não ativo"></i>
+        </div>
+        <div class='p-col p-jc-around p-text-right' (click)='routeToEdit(item.id)'>
+          <button pButton pRipple type="button" icon="pi pi-user-edit" class="p-button-rounded p-button-secondary" pTooltip="Editar"></button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dataView>

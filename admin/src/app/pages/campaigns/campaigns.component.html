@@ -1,0 +1,35 @@
+<section class="campaigns-component">
+    <header class="campaigns-header">
+        <h1>CAMPANHAS</h1>
+        <div>
+            <button (click)="createNewCampaign()"><i class="fas fa-plus-circle"></i> Criar nova campanha</button>
+        </div>
+    </header>
+    <div class="campaigns-body">
+        <div class="campaigns-search">
+            <form [formGroup]="campaignForm">
+                <input type="text" placeholder="Busque por campanha" formControlName="campaign"><i class="fas fa-search"></i>
+            </form>
+        </div>
+        <div class="campaigns-list">
+            <div class="loading" *ngIf="isLoading">Carregando ...</div>
+            <div *ngIf="!isLoading && campaignList?.length">
+                <div class="campaigns-list-item" *ngFor="let campaign of campaignList">
+                    <span *ngIf="campaign?.active">
+                        <a [routerLink]="['/campaigns', campaign?.id]">
+                            <div class="item">
+                                <figure>
+                                    <img [src]="campaign?.thumbnail || 'https://imagem.band.com.br/novahome/0a6735ad-3f65-47f7-8dce-02151b51682f.png'" alt="logo" />
+                                </figure>
+                            </div>
+                            <p class="title">{{ campaign?.name }}</p>
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <div class="loading" *ngIf="!isLoading && campaignList?.length == 0">
+                Ops! Não temos resultados para essa busca.
+            </div>
+        </div>
+    </div>
+</section>

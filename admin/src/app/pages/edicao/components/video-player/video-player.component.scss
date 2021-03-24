@@ -1,0 +1,203 @@
+/* vjs-player.component.css */
+@import '~video.js/dist/video-js.css';
+
+.video-player {
+  .editor-video {
+    display: flex;
+    position: relative;
+
+    .thumbnail-preview {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+
+      .canvas {
+        height: 180px;
+        width: 320px;
+      }
+
+      .thumbnail-download {
+        position: absolute;
+        right: 5px;
+        bottom: 10px;
+        height: 40px;
+      }
+
+      .thumbnail-close {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+      }
+
+      .thumbnail-use {
+        position: absolute;
+        // left: 5px;
+        // bottom: 10px;
+        // height: 40px;
+        right: 5px;
+        bottom: 10px;
+        height: 40px;
+      }
+    }
+
+    .player-background {
+      background-image: url('/assets/img/squares.jpg');
+      background-repeat: repeat;
+      width: 100%;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    // video {
+    // width: 100%;
+    // height: unset;
+    // display: block;
+    // }
+
+    .loading-video {
+      background: rgba(0, 0, 0, 0.6);
+      position: absolute;
+      z-index: 1;
+      font-size: 160px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-speed-indicator {
+      position: absolute;
+      left: 36px;
+      top: 36px;
+      z-index: 1;
+      color: #ffffff;
+    }
+
+    .video-timer-indicator {
+      position: absolute;
+      right: 36px;
+      top: 36px;
+      z-index: 1;
+      color: #ffffff;
+    }
+
+    .video-display-align {
+      background: black;
+      height: 30px;
+      padding: 0px 16px;
+      border-radius: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .editor-player-control {
+    height: 65px;
+    background: #414753;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__audio-control {
+      margin-right: 35px;
+      height: 20px;
+      width: 20px;
+      cursor: pointer;
+
+      i {
+        font-size: 1.125rem;
+        color: #ffffff;
+      }
+    }
+
+    &__pricipal-controls {
+      display: flex;
+      align-items: center;
+
+      a + a {
+        margin-left: 30px;
+      }
+
+      .a-disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+    }
+
+    &__steps-control {
+      i {
+        font-size: 1.125rem;
+        color: #ffffff;
+        cursor: pointer;
+      }
+
+      &--size {
+        font-size: 2rem;
+      }
+    }
+
+    &__btn-time {
+      display: flex;
+      i {
+        margin-right: 10px;
+        color: #f31733;
+      }
+
+      button {
+        width: 90px;
+        height: 35px;
+        padding: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #414753;
+        border: 1px solid #5e6571;
+        font-size: 0.875rem;
+        color: #ffffff;
+        font-weight: 400;
+        justify-content: center;
+      }
+    }
+
+    button {
+      width: 125px;
+      height: 35px;
+      padding: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #414753;
+      border: 1px solid #5e6571;
+      font-size: 0.875rem;
+      color: #ffffff;
+      font-weight: 800;
+      justify-content: center;
+    }
+
+    button + button {
+      margin-left: 20px;
+    }
+  }
+
+  .disabled-btn {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .radio-gif {
+    position: absolute;
+    z-index: 1;
+    // font-size: 160px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

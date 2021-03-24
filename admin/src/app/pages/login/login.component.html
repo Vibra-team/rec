@@ -1,0 +1,49 @@
+<section class="l_background">
+  <div class="l_container">
+    <div class="rec_logo">
+      <span><i class="fas fa-circle"></i> REC</span>
+    </div>
+    <div class="considerations">desenvolvido por Vibra</div>
+    <div class="message-login">
+      <span>Olá</span>
+      <span>Faça seu login</span>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="autentica()">
+      <div class="login-form">
+        <div class="login-form__form-input">
+          <input formControlName="username" type="text" placeholder="Usuário" />
+          <i class="fas fa-user login-form__form-input--lock"></i>
+        </div>
+        <div class="login-form__form-input">
+          <input
+            formControlName="password"
+            type="password"
+            placeholder="Senha"
+            [type]="typeInput"
+          />
+          <i class="fas fa-lock login-form__form-input--lock"></i>
+          <button (click)="passwordVisibleAndNotVisible()" type="button" class="login-form__form-input--eye">
+            <i *ngIf="!showPassword" class="fas fa-eye"></i>
+            <i *ngIf="showPassword" class="fas fa-eye-slash"></i>
+          </button>
+
+        </div>
+        <!-- <div class="login-form__form-check">
+          <input type="checkbox" />
+          <span>Manter conectado</span>
+        </div> -->
+      </div>
+
+      <div class="btn-submit">
+        <button
+          [disabled]="btnDisabled"
+          type="submit"
+        >
+          {{ !btnDisabled ? 'Acessar' : 'Autenticando...' }}
+        </button>
+      </div>
+    </form>
+
+
+  </div>
+</section>

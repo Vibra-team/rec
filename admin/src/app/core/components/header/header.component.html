@@ -1,0 +1,122 @@
+<header class="header-component">
+    <div class="nav-home">
+        <button class="button-showhide" type="button" (click)="hideShowNavBar()">
+            <i *ngIf="showNav" class="fas fa-caret-left"></i>
+            <i *ngIf="!showNav" class="fas fa-caret-right"></i>
+        </button>
+
+        <div class="container-nav">
+            <div style="float: left;" class="section-nav">
+                <form *ngIf="showCalendar" [formGroup]="searchForm">
+                    <div class="search-fields" style="display: flex; align-items: center; justify-content: space-between">
+                        <label>Data</label>
+                        <p-calendar #searchDate formControlName="searchDate" [showTime]="true" [hourFormat]="24"
+                            [showIcon]="true" [hideOnDateTimeSelect]="false" placeholder="Selecione uma data"
+                            [locale]="calendarConfig" dateFormat="dd/mm/yy">
+                            <p-footer style="display: flex;">
+                                <button class="calendar-btn cancel">CANCELAR</button>
+                                <button class="calendar-btn ok" (click)="searchByDate()">DEFINIR</button>
+                            </p-footer>
+                        </p-calendar>
+                    </div>
+                </form>
+                <form *ngIf="showQueueFilter" [formGroup]="queueForm">
+                    <div class="search-fields channel-select">
+                        <p-dropdown [options]="channelOptions" formControlName="channel" optionLabel="label" placeholder="Canal" [style]="{width: '230px'}" [dataKey]="value">
+                        </p-dropdown>
+                    </div>
+                </form>
+                <!-- <div class="search-fields" *ngIf="channelOptions?.length > 0 && showQueueFilter" style="height: 100%;">
+                    <button style="width: 320px; background: #f9f9f9; border: 1px solid #dddddd; height: 100%;"><i class="fas fa-edit"></i> Editar Campanha</button>
+                </div>
+                <div class="search-fields" *ngIf="channelOptions?.length > 0 && showQueueFilter" style="height: 100%;">
+                    <button style="width: 320px; background: #f9f9f9; border: 1px solid #dddddd; height: 100%; color: #f31733;"><i class="fas fa-plus-circle"></i> Criar nova Campanha</button>
+                </div> -->
+            </div>
+            <div style="float: right;" class="section-nav">
+                <div class="user-nav">
+                    <span><i class="fas fa-user"></i> {{ user?.nome }} </span>
+                </div>
+                <div>
+                    <app-btn-logout></app-btn-logout>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr style="margin: 0px;">
+    <div *ngIf="showQueueFilter" class="nav-home">
+        <div class="container-nav-search">
+            <form [formGroup]="queueForm" class="vertical-align">
+                <div class="search-fields">
+                    <label>FILTRAR POR:</label>
+                    <p-calendar #queueSearchDate formControlName="searchDate" [showTime]="true" [hourFormat]="24"
+                        [showIcon]="true" [hideOnDateTimeSelect]="false"
+                        placeholder="Selecione uma data" [locale]="calendarConfig" dateFormat="dd/mm/yy">
+                        <p-footer style="display: flex;">
+                            <button class="calendar-btn cancel" (click)="clearDateField()">LIMPAR</button>
+                            <button class="calendar-btn ok" (click)="searchQueueByDate()">DEFINIR</button>
+                        </p-footer>
+                    </p-calendar>
+                </div>
+                <div class="search-fields">
+                    <p-dropdown [options]="statusOptions" formControlName="status" optionLabel="label" placeholder="Status" [style]="{width: '210px'}">
+                        <ng-template pTemplate="selectedItem">
+                            <div class="select-padding">
+                                <i *ngIf="queueForm?.get('status')?.value?.value == 2" class="fas fa-check-circle"></i>
+                                <i *ngIf="queueForm?.get('status')?.value?.value == 1" class="fas fa-clock"></i>
+                                <i *ngIf="queueForm?.get('status')?.value?.value == -1" class="fas fa-times-circle"></i>
+                                {{ queueForm?.get('status')?.value?.label }}
+                            </div>
+                        </ng-template>
+                        <ng-template let-item pTemplate="item">
+                            <div class="select-padding">
+                                <i *ngIf="item?.value?.value == 2" class="fas fa-check-circle"></i>
+                                <i *ngIf="item?.value?.value == 1" class="fas fa-clock"></i>
+                                <i *ngIf="item?.value?.value == -1" class="fas fa-times-circle"></i>
+                                {{ item?.label }}
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <!-- <div class="search-fields">
+                    <p-dropdown [options]="typeOptions" formControlName="type" optionLabel="label" placeholder="Tipo" [style]="{width: '210px'}">
+                        <ng-template pTemplate="selectedItem">
+                            <div class="select-padding">
+                                <i *ngIf="queueForm?.get('type')?.value?.value == 2" class="fas fa-video"></i>
+                                <i *ngIf="queueForm?.get('type')?.value?.value == 1">GIF</i>
+                                <i *ngIf="queueForm?.get('type')?.value?.value == -1" class="fas fa-image"></i>
+                                {{ queueForm?.get('type')?.value?.label }}
+                            </div>
+                        </ng-template>
+                        <ng-template let-item pTemplate="item">
+                            <div class="select-padding">
+                                <i *ngIf="item?.value?.value == 2" class="fas fa-video"></i>
+                                <i *ngIf="item?.value?.value == 1">GIF</i>
+                                <i *ngIf="item?.value?.value == -1" class="fas fa-image"></i>
+                                {{ item?.label }}
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="search-fields">
+                    <p-dropdown [options]="timeOptions" formControlName="time" optionLabel="label" placeholder="Tempo" [style]="{width: '210px'}">
+                        <ng-template pTemplate="selectedItem">
+                            <div class="select-padding">
+                                <i *ngIf="queueForm?.get('time')?.value?.value == 2" class="fas fa-clock"></i>
+                                <i *ngIf="queueForm?.get('time')?.value?.value == 1" class="far fa-clock"></i>
+                                {{ queueForm?.get('time')?.value?.label }}
+                            </div>
+                        </ng-template>
+                        <ng-template let-item pTemplate="item">
+                            <div class="select-padding">
+                                <i *ngIf="item?.value?.value == 2" class="fas fa-clock"></i>
+                                <i *ngIf="item?.value?.value == 1" class="far fa-clock"></i>
+                                {{ item?.label }}
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div> -->
+            </form>
+        </div>
+    </div>
+</header>

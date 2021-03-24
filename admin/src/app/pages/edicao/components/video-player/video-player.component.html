@@ -1,0 +1,72 @@
+<section class="video-player">
+  <div class="editor-video">
+    <div *ngIf="videoSpeed != 1" class="video-speed-indicator video-display-align">
+      <span>
+        {{ videoSpeed + 'x' }}
+      </span>
+    </div>
+    <div class="video-timer-indicator video-display-align">
+      <span>
+        {{ currentTimeDisplay + ' ' + actualFrame }}
+      </span>
+    </div>
+    <div *ngIf="isLoading" class="loading-video">
+      <div>
+        <i class="fas fa-circle-notch fa-spin" style="color: #414753;"></i>
+        <!-- <i class="fa fa-spinner fa-spin"></i> -->
+      </div>
+    </div>
+    <div *ngIf="channelType == channelEnum.Radio" class="radio-gif">
+      <img *ngIf="player.paused()" src="/assets/img/radio-jpeg.JPG">
+      <img *ngIf="!player.paused()" src="/assets/img/radio.gif">
+    </div>
+    <div class="player-background">
+      <div  [ngStyle]="{'width': aspectRatioValue}"  style="background-color: black; height: inherit;">
+        <video #video style="width: 100%; height: inherit;"></video>
+      </div>
+    </div>
+    <div class="thumbnail-preview">
+      <canvas class="canvas" #canvas></canvas>
+      <div *ngIf="image">
+        <button pButton icon="pi pi-check" label="Usar Thumb" (click)="sendThumb()"
+          class="thumbnail-use p-button-sm p-button-raised p-button-rounded p-button-secondary"></button>
+        <!-- <a [href]="image" pButton icon="pi pi-download" label="Download"
+          class="thumbnail-download p-button-sm p-button-raised p-button-rounded p-button-secondary" download></a> -->
+        <button (click)="clearSnapshot()" pButton type="button"
+          class="thumbnail-close p-button-sm p-button-raised p-button-rounded p-button-danger"
+          icon="pi pi-times"></button>
+      </div>
+    </div>
+  </div>
+  <div class="editor-player-control">
+    <div style="display: flex; align-items: center">
+      <a class="editor-player-control__audio-control" (click)="muteVideo()">
+        <i *ngIf="!player.muted()" class="fas fa-volume-up"></i>
+        <i *ngIf="player.muted()" class="fas fa-volume-off"></i>
+      </a>
+      <button (click)="startCut()" pTooltip="[" tooltipPosition="top">Marcar Início</button>
+      <button (click)="endCut()" pTooltip="]" tooltipPosition="top">Marcar Fim</button>
+    </div>
+    <div class="editor-player-control__pricipal-controls">
+      <a class="editor-player-control__steps-control" (click)="setPreviousVideo()" pTooltip="A" tooltipPosition="top"
+        [ngClass]="{'a-disabled': !idPrevVideo}"><i class="fas fa-fast-backward"></i></a>
+      <a class="editor-player-control__steps-control" (click)="setDownVideoSpeed()" pTooltip="J" tooltipPosition="top"><i class="fas fa-backward"></i></a>
+
+      <a class="editor-player-control__steps-control" (click)="playVideo()" pTooltip="Space" tooltipPosition="top">
+        <i *ngIf="player.paused()" class="fas fa-play" style="font-size: 1.5rem"></i>
+        <i *ngIf="!player.paused()" class="fas fa-pause" style="font-size: 1.5rem"></i>
+      </a>
+      <a class="editor-player-control__steps-control" (click)="setUpVideoSpeed()" pTooltip="L" tooltipPosition="top"><i class="fas fa-forward"></i></a>
+      <a class="editor-player-control__steps-control" (click)="setNextVideo()" pTooltip="S" tooltipPosition="top"
+        [ngClass]="{'a-disabled': !idNextVideo}"><i class="fas fa-fast-forward"></i></a>
+    </div>
+    <div class="editor-player-control__btn-time">
+      <button [disabled]="channelType == channelEnum.Radio" [ngClass]="{'disabled-btn': (channelType == channelEnum.Radio)}" (click)="takeSnapshot()">Thumbnail</button>
+      <button>
+        <i class="fas fa-circle"></i>
+        {{ created | date:'dd/MM/yyyy' }}
+        {{ currentTimeDisplay ? currentTimeDisplay : '00:00' }}
+      </button>
+    </div>
+  </div>
+</section>
