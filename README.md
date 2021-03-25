@@ -1,8 +1,8 @@
 # REC GNI (Google News Iniciative) project
 
-This project was developed by Vibra team to a GNI project to help others teams with a  structure from frontend project to show a movie, cut some slices thar movie to share in SocialMedias like Youtube, Facebook, Twitter and another players.
+REC is a project developed by the Vibra team (a company of the Bandeirantes Group) with the support of the Google News Initiative (GNI). It is a web system for capturing audio and videos from TV or radio stations. After capture, the user can edit the video and distribute the same media on any video platforms or social media. Currently, it is integrated with YouTube, Facebook, Twitter and UOL. 
 
-In this repository you can fork all repositories developed to this project that TV Bandeirantes are using nowadays.
+Here you can fork all repositories developed to this project that TV Bandeirantes are using nowadays
 
 ## Contribute
 
